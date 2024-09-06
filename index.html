@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2487.5">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Crashpad Lodging Calculator&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body class="bg-gray-100 p-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h1 class="text-2xl font-bold mb-4"&gt;Crashpad Lodging Calculator&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="mb-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label for="base" class="block mb-2"&gt;Select Base:&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;select id="base" class="w-full p-2 border rounded"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value=""&gt;Select a base&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="mb-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label for="startDate" class="block mb-2"&gt;Check-in Date:&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;input type="date" id="startDate" class="w-full p-2 border rounded"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="mb-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label for="endDate" class="block mb-2"&gt;Check-out Date:&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;input type="date" id="endDate" class="w-full p-2 border rounded"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button id="calculate" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"&gt;Calculate Total Cost&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="result" class="mt-4 hidden"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p id="totalCost" class="text-xl font-bold"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p id="nightsStayed" class="text-lg"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;details class="mt-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;summary class="cursor-pointer"&gt;Show Calculation Details&lt;/summary&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;pre id="debugInfo" class="mt-2 p-2 bg-gray-100 rounded text-sm"&gt;&lt;/pre&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/details&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const lodgingData = {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Air Force Academy, CO": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-05-31", rate: 114 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-06-01", end: "2024-08-31", rate: 154 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-09-01", end: "2024-09-30", rate: 114 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Altus AFB, OK": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 89 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Aviano AB, IT": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 94 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Barksdale AFB, LA": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 89 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Beale AFB, CA": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 89 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Buckley AFB, CO": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2023-10-31", rate: 161 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-11-01", end: "2024-03-31", rate: 134 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-04-01", end: "2024-09-30", rate: 161 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Cannon AFB, NM": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 89 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Columbus AFB, MS": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 89 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Davis-Monthan AFB, AZ": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2023-12-31", rate: 94 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-01-01", end: "2024-03-31", rate: 134 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-04-01", end: "2024-09-30", rate: 94 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Dobbins ARB, GA": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 114 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Dover AFB, DE": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 89 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Duke Field, FL": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2023-10-31", rate: 154 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-11-01", end: "2024-02-29", rate: 94 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-03-01", end: "2024-05-31", rate: 154 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-06-01", end: "2024-07-31", rate: 175 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-08-01", end: "2024-09-30", rate: 154 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Dyess AFB, TX": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 89 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Edwards AFB, CA": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2023-12-31", rate: 154 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-01-01", end: "2024-09-30", rate: 154 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Eglin AFB, FL": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2023-10-31", rate: 154 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-11-01", end: "2024-02-29", rate: 94 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-03-01", end: "2024-05-31", rate: 154 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-06-01", end: "2024-07-31", rate: 175 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-08-01", end: "2024-09-30", rate: 154 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Eielson AFB, AK": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-05-15", rate: 114 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-05-16", end: "2024-09-30", rate: 161 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Ellsworth AFB, SD": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-05-31", rate: 89 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-06-01", end: "2024-08-31", rate: 154 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-09-01", end: "2024-09-30", rate: 89 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Fairchild AFB, WA": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 94 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Goodfellow AFB, TX": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 89 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Grissom ARB, IN": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 89 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Gunter Annex, AL": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 89 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Hill AFB, UT": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 89 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Holloman AFB, NM": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 89 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Hurlburt Field, FL": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2023-10-31", rate: 154 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-11-01", end: "2024-02-29", rate: 94 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-03-01", end: "2024-05-31", rate: 154 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-06-01", end: "2024-07-31", rate: 175 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-08-01", end: "2024-09-30", rate: 154 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Incirlik AB, TR": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 134 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"JB Andrews, MD": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2023-10-31", rate: 175 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-11-01", end: "2024-02-29", rate: 154 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-03-01", end: "2024-06-30", rate: 175 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-07-01", end: "2024-08-31", rate: 154 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-09-01", end: "2024-09-30", rate: 175 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"JB Charleston, SC": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2023-11-30", rate: 175 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-12-01", end: "2024-02-29", rate: 154 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-03-01", end: "2024-09-30", rate: 175 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"JB Elmendorf-Richardson, AK": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 175 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"JB Langley-Eustis, VA": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 89 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"JB MDL (Lakehurst Naval AWC), NJ": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-06-30", rate: 114 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-07-01", end: "2024-08-31", rate: 154 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-09-01", end: "2024-09-30", rate: 114 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"JB MDL (McGuire-Dix), NJ": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 94 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"JB San Antonio (Lackland), TX": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 114 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"JB San Antonio (Randolph), TX": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 114 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Kadena AB, JP": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-06-30", rate: 134 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-07-01", end: "2024-08-31", rate: 175 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-09-01", end: "2024-09-30", rate: 134 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Keesler AFB, MS": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 89 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Kirtland AFB, NM": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 114 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Kunsan AB, KR": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 71 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Lajes Field, PT": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 87 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Laughlin AFB, TX": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 89 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Little Rock AFB, AR": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 89 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Luke AFB, AZ": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-01-31", rate: 134 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-02-01", end: "2024-03-31", rate: 161 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-04-01", end: "2024-05-31", rate: 134 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-06-01", end: "2024-08-31", rate: 94 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-09-01", end: "2024-09-30", rate: 134 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"MacDill AFB, FL": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-04-30", rate: 114 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-05-01", end: "2024-09-30", rate: 114 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Malmstrom AFB, MT": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 89 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"March ARB, CA": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-04-30", rate: 154 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2024-05-01", end: "2024-09-30", rate: 114 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Maxwell AFB, AL": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 89 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"McConnell AFB, KS": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 94 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Minneapolis-Saint Paul ARS, MN": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 134 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Minot AFB, ND": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 89 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Misawa AB, JP": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 94 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Moody AFB, GA": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 89 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Morón AB, SP": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2024-09-30", rate: 134 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"Mountain Home AFB, ID": [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-10-01", end: "2023-11-30", rate: 154 },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ start: "2023-12-01", end: "2024-03-31", rate: 175 },</p>
+</body>
+</html>
